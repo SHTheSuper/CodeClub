@@ -2,8 +2,7 @@ CC=gcc
 CFLAGS=-Wall -I.
 DEPS=PrimeTest.h List.h
 OBJ=PrimeTest.o main.o List.o
-LDFLAGS=-lm
-
+LDFLAGS=-lm -lpthread
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS) $(LDFLAGS)
 
@@ -13,4 +12,4 @@ primes: $(OBJ)
 .PHONY: clean
 
 clean:
-	rm -f $(OBJ) primes
+	rm -f $(OBJ)

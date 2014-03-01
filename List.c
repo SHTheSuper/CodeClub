@@ -12,6 +12,7 @@
  */
 
 #include "List.h"
+pthread_mutex_t curstart_mutex = PTHREAD_MUTEX_INITIALIZER;
 Node* gen_random_list(int size)
 {
   Node *root = NULL;
@@ -52,13 +53,36 @@ listfail:
   return NULL; // Our list could not be fully created, so we return NULL.
 }
 
-void iterate_over_list(unsigned long(*func)(unsigned long), Node *root)
+void *thread_iteration(void *ptr)
 {
-  Node *scan = root;
-  while(scan != NULL)
+    Node *ourNode;
+    while(curstart_ptr != NULL)
+    {
+        pthread_mutex_lock(&curstart_mutex); // Other threads wait until this is unlocked to continue when they call "pthread_mutex_lock." We can use this to safely stall the threads from trying to access "curstart_ptr" while we modify it.
+        ourNode = curstart_ptr;
+        curstart_ptr = curstart_ptr->next;
+pthread_mutex_unlock(&curstart_mutex); // We've done it. Now we know what ourNode is, so we do math on it:
+        ourNode->result = (*fitr)(ourNode->num);
+    }
+    return NULL;
+}
+
+void iterate_over_list(unsigned long(*func)(unsigned long u), Node *root, int threads){
+
+  // What's going on?
+  // Hm?
+  int io = 0;
+  fitr = func;
+  pthread_t ourthreads[threads]; //
+  curstart_ptr = root;
+  int i;
+  for(i = 0; i < threads; i++)
   {
-    scan->result = (*func)(scan->num); // What just happend? I explained this in class. Hopefully.
-    scan = scan->next;
+      pthread_create(&ourthreads[i],NULL,thread_iteration,NULL);
+  }
+  for(i = 0; i < threads; i++)
+  {
+      pthread_join(ourthreads[i], NULL);
   }
 }
 
