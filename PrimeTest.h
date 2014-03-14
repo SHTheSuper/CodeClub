@@ -11,5 +11,5 @@
  * ==================================================================
  */
 #include <math.h>
-
+unsigned long ospina_func(unsigned long x);
 unsigned long largestPrime(unsigned long n);

@@ -13,6 +13,11 @@
 #include "PrimeTest.h"
 #include <math.h>
 
+unsigned long ospina_func(unsigned long x)
+{
+   return (2*x)+7;
+}
+
 unsigned long largestPrime(unsigned long n)
 {
   int i;

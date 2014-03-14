@@ -33,7 +33,6 @@ Node* gen_random_list(int size)
       // This is an error - our node was not allocated. So we need to print a fail message.
       goto listfail;
     }
-
     if(add_to_list(old, new) == 0)
     {
       // Since lists are linear, you can add a new node at any point in the list and it works
@@ -42,7 +41,7 @@ Node* gen_random_list(int size)
     // This "if" statement checks to insure that we successfully added to our list. If not, we fail.
     goto listfail;
     }
-    // End hte loop.
+    // End the loop.
   }
   return root;
 
@@ -51,6 +50,14 @@ listfail:
   free_list(&root); // Our list might have been partially created, so we make sure to free all the memory we used.
   return NULL; // Our list could not be fully created, so we return NULL.
 }
+
+
+
+
+
+
+
+
 
 void iterate_over_list(unsigned long(*func)(unsigned long), Node *root)
 {
@@ -137,5 +144,6 @@ void debug_list(Node *list)
     printf("%lu has a result of %lu.\t",scan->num,scan->result);
     scan = scan->next;
   }
+  printf("\n\n\n\n");
 }
 
