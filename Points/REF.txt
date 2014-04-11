@@ -1,0 +1,6 @@
+You will create a very small program for working with points.
+You need to be able to:
+- Make a new point from two floats
+- Find the scalar Distance between two points
+- Find the result of adding two points
+- Print the points in the format (x,y);
